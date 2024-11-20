@@ -1,30 +1,47 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Sample Webpage</title>
-  </head>
-  <body>
-    <form>
-      <label for="userInput">Text Input:</label>
-      <textarea id="userInput" rows="4" cols="50" onchange="displayValue()"></textarea>
-      <p id="output"></p>
-    </form>
-    <script>
-      function convertToHTMLEntities(str) {
-        const textarea = document.createElement("textarea");
-        textarea.textContent = str;
-        return textarea.innerHTML;
-      }
+    <head>
+        <title>Sample Webpage</title>
+    </head>
+    <body>
+        <label for="userInput">Text Input:</label>
+        <br />
+        <textarea id="userInput" rows="4" cols="50"></textarea>
+        <br />
+        <br />
+        <button id="convertButton" onclick="displayValue()">Convert</button>
+        <br />
+        <br />
+        <button id="copyButton">Copy Text</button>
+        <p id="output"></p>
+        <script>
+            function convertToHTMLEntities(str) {
+                const textarea = document.createElement("textarea");
+                textarea.textContent = str;
+                return textarea.innerHTML;
+            }
 
-      function displayValue() {
-        // Get the input element by its ID
-        const inputField = document.getElementById("userInput");
-        // Get the value of the input field
-        const value = inputField.value;
-        const encodeOutput = convertToHTMLEntities(value);
-        // Display the value in the output paragraph
-        document.getElementById("output").innerText = encodeOutput;
-      }
-    </script>
-  </body>
+            function displayValue() {
+                // Get the input element by its ID
+                const inputField = document.getElementById("userInput");
+                // Get the value of the input field
+                const value = inputField.value;
+                const encodeOutput = convertToHTMLEntities(value);
+                // Display the value in the output paragraph
+                document.getElementById("output").innerText = encodeOutput;
+            }
+
+            document.getElementById("copyButton").addEventListener("click", function () {
+                const textToCopy = document.getElementById("output").innerText; // Get the text from the paragraph
+                navigator.clipboard
+                    .writeText(textToCopy) // Copy the text to clipboard
+                    .then(() => {
+                        console.log("Text copied to clipboard: " + textToCopy); // Log success message
+                    })
+                    .catch((err) => {
+                        console.error("Error copying text: ", err); // Log error message if any
+                    });
+            });
+        </script>
+    </body>
 </html>
